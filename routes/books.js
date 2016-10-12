@@ -77,8 +77,8 @@ router.post('/', function (req, res) {
       done();
       return;
     }
-    client.query('INSERT INTO books (author, title, published) VALUES ($1, $2, $3) returning *;',
-                  [req.body.author, req.body.title, req.body.published],
+    client.query('INSERT INTO books (author, title, published, edition, publisher) VALUES ($1, $2, $3, $4, $5) returning *;',
+                  [req.body.author, req.body.title, req.body.published, req.body.edition, req.body.publisher],
                   function (err, result) {
       done();
       if (err) {
