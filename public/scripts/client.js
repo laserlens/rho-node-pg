@@ -32,7 +32,7 @@ function displayBooks(response) {
      var $button = $('<button class="btn-default update">Update</button>');
      $button.data('id', book.id);
      $form.append($button);
-     $form.append('<button class="btn-default remove" Type="button" id = '+book.id+'>Remove</button>');
+     $form.append('<button class="btn-default remove" type="button" id = '+book.id+'>Remove</button>');
      $li.append($form);
      $list.append($li);
    });
