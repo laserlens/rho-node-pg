@@ -6,3 +6,10 @@ h1 {
 h2 {
   color: gray;
 }
+#listContainer {
+  float: left;
+  padding: 2em 2em 2em 2em;
+}
+button:focus {
+  display:none;
+}

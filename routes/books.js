@@ -93,6 +93,61 @@ router.post('/', function (req, res) {
 
 
 });//end of post
+//in future enter delete like put
+router.delete('/', function (req, res) {
+  console.log(req.body);
+  pool.connect(function (err,client,done) {
+    if (err) {
+      res.sendStatus(500);
+      done();
+      return;
+    }
+    client.query('DELETE  FROM books WHERE id = $1;',
+                  [req.body.id],
+                  function (err, result) {
+      done();
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+        }
 
+        res.send(result.rows);
+
+      });
+    });
+  });
+  //PUT localhost:3000/42
+  // req.params.id === 42
+  //modify existing row in the database
+  router.put('/:id', function (req, res) {
+    var id = req.params.id; //params represents any url paramiters
+    var author = req.body.author;
+    var title = req.body.title;
+    var published = req.body.published;
+    var edition = req.body.edition;
+    var publisher = req.body.publisher;
+    console.log('whats id', id);
+
+    pool.connect(function (err,client,done) {
+     try{//for error testing
+      if (err) {
+        res.sendStatus(500);
+        return;
+      }
+    client.query('UPDATE books SET author = $1, title=$2, published=$3, edition=$4, publisher=$5 WHERE id=$6;',
+                  [author, title, published, edition, publisher, id],
+                      function (err, result) {
+                         if (err) {
+                           console.log('Error querying database', err);
+                           res.sendStatus(500);
+                         }
+
+                      });//end of query
+      }finally {//second half of try
+        done();
+      }
+    });//end of conect
+  });//end of put
 
 module.exports = router;
